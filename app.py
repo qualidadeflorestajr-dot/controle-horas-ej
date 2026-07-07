@@ -181,18 +181,32 @@ def saida():
     nome = request.form["nome"]
     hora = request.form.get("hora") or datetime.now().strftime("%H:%M")
 
-    df = ler()
+   def salvar(df):
 
-    for i in range(len(df)-1, -1, -1):
-        if str(df.loc[i, "Nome"]).strip() == nome and df.loc[i, "Saída"] == "":
-            df.loc[i, "Saída"] = hora
-            df.loc[i, "Total/Dia"] = calcular_horas(df.loc[i, "Entrada"], hora)
-            break
+    print("="*40)
 
-    salvar(df)
-    return "Saída registrada!"
+    print("SALVANDO")
 
+    print(df.tail())
 
+    print("="*40)
+
+    df.to_excel(ARQUIVO,index=False)
+
+    return pd.read_excel(
+        ARQUIVO,
+        dtype=str
+    ).fillna("")
+
+    def salvar(df):
+
+    with lock:
+
+        temp = ARQUIVO + ".tmp"
+
+        df.to_excel(temp, index=False)
+
+        os.replace(temp, ARQUIVO)
 # ---------------- ADMIN ----------------
 @app.route("/admin-login", methods=["POST"])
 def admin_login():
