@@ -18,7 +18,6 @@ MEMBROS = [
     "Giulliana Pivato Campos",
     "Iago de Souza Reis",
     "Iago Lopes Sereno",
-    "Igor Marcelo Silvestrini Rodrigues",
     "Isabela Veiga Luchetti Gonçalves",
     "João Carlos Almeida Maciel",
     "Kamilly dos Santos Almeida",
