@@ -1,1 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
 
+<head>
+<meta charset="UTF-8">
+<title>Controle de Horas Floresta Jr 2026/2</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #eaf7ea;
+    margin: 0;
+    text-align: center;
+}
+
+.header {
+    background: #1e7a3a;
+    color: white;
+    padding: 25px;
+}
+
+.logo {
+    width: 110px;
+    display: block;
+    margin: auto;
+}
+
+.card {
+    background: white;
+    width: 85%;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+}
+
+button {
+    background: #1e7a3a;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+button:hover {
+    background: #145a2a;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #1e7a3a;
+    color: white;
+    padding: 8px;
+}
+
+td {
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+}
+
+h2 {
+    color: #1e7a3a;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <img src="/static/logo.png" class="logo">
+    <h1>Controle de Horas Floresta Jr 2026/2</h1>
+</div>
+
+<!-- RANKING -->
+<div class="card">
+<h2>🏆 Ranking Semanal (TOP 3)</h2>
+
+{% for r in ranking %}
+<p><b>{{ r.pos }}</b> {{ r.nome }} - {{ r.total }}</p>
+{% endfor %}
+</div>
+
+<!-- ENTRADA -->
+<div class="card">
+<h2>Entrada</h2>
+<form action="/entrada" method="post">
+<select name="nome">
+{% for m in membros %}
+<option>{{ m }}</option>
+{% endfor %}
+</select>
+<input type="time" name="hora">
+<button>Registrar</button>
+</form>
+</div>
+
+<!-- SAÍDA -->
+<div class="card">
+<h2>Saída</h2>
+<form action="/saida" method="post">
+<select name="nome">
+{% for m in membros %}
+<option>{{ m }}</option>
+{% endfor %}
+</select>
+<input type="time" name="hora">
+<button>Registrar</button>
+</form>
+</div>
+
+<!-- REGISTROS -->
+<div class="card">
+<h2>Registros</h2>
+
+<table>
+<tr>
+<th>Nome</th>
+<th>Data</th>
+<th>Entrada</th>
+<th>Saída</th>
+<th>Total/Dia</th>
+</tr>
+
+{% for r in registros %}
+<tr>
+<td>{{ r["Nome"] }}</td>
+<td>{{ r["Data"] }}</td>
+<td>{{ r["Entrada"] }}</td>
+<td>{{ r["Saída"] }}</td>
+<td>{{ r["Total/Dia"] }}</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+
+<!-- SEMANA -->
+<div class="card">
+<h2>Total Semanal</h2>
+
+{% for s in semanal %}
+<p>{{ s.nome }} - {{ s.total }}</p>
+{% endfor %}
+</div>
+
+<!-- DOWNLOAD -->
+<div class="card">
+<h2>Relatórios</h2>
+<a href="/download"><button>Baixar Excel</button></a>
+</div>
+
+<!-- ADMIN -->
+<div class="card">
+<h2>Admin</h2>
+
+{% if not admin %}
+<form action="/admin-login" method="post">
+<input type="password" name="senha" placeholder="Senha admin">
+<button>Entrar</button>
+</form>
+{% else %}
+<p>Admin logado</p>
+<a href="/logout"><button>Deslogar</button></a>
+
+<form action="/limpar" method="post">
+<button style="background:red;">Limpar</button>
+</form>
+{% endif %}
+
+</div>
+
+</body>
+</html>
