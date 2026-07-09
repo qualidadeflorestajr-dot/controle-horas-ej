@@ -4,6 +4,18 @@ import pandas as pd
 import os
 from functools import wraps
 
+from banco import criar_banco   # <-- ADICIONE ESTA LINHA
+
+app = Flask(__name__)
+app.secret_key = "floresta_secret"
+
+criar_banco()   # <-- ADICIONE ESTA LINHA
+from flask import Flask, render_template, request, send_file, session
+from datetime import datetime, timedelta
+import pandas as pd
+import os
+from functools import wraps
+
 
 app = Flask(__name__)
 app.secret_key = "floresta_secret"
