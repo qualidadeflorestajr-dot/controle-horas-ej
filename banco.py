@@ -1,29 +1,22 @@
 import sqlite3
-import os
 
-PASTA_DB = "database"
-ARQUIVO_DB = os.path.join(PASTA_DB, "controle_horas.db")
+BANCO = "controle_horas.db"
 
 
 def conectar():
-
-    if not os.path.exists(PASTA_DB):
-        os.makedirs(PASTA_DB)
-
-    conexao = sqlite3.connect(ARQUIVO_DB)
-    conexao.row_factory = sqlite3.Row
-
-    return conexao
+    conn = sqlite3.connect(BANCO)
+    conn.row_factory = sqlite3.Row
+    return conn
 
 
-def criar_tabelas():
+def criar_banco():
 
     conn = conectar()
 
     cursor = conn.cursor()
 
     cursor.execute("""
-    CREATE TABLE IF NOT EXISTS registros(
+    CREATE TABLE IF NOT EXISTS registros (
 
         id INTEGER PRIMARY KEY AUTOINCREMENT,
 
@@ -41,5 +34,4 @@ def criar_tabelas():
     """)
 
     conn.commit()
-
     conn.close()
